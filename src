@@ -1,0 +1,176 @@
+
+
+deleteBtn.addEventListener("click", () => {
+  confirmAction("Delete this task?", () => {
+    undoStack.push(JSON.parse(JSON.stringify(tasks)));
+    redoStack = [];
+    tasks.splice(index, 1);
+    save();
+    renderTable(filterTasks());
+    showStatus("Task deleted 🗑️");
+  });
+
+  undoStack.push(JSON.parse(JSON.stringify(tasks)));
+  redoStack = [];
+  tasks.splice(index, 1);
+  save();
+  renderTable(filterTasks());
+  showStatus("Task deleted 🗑️");
+});
+
+function confirmAction(message, onConfirm) {
+  const modal = document.getElementById("confirmModal");
+  const text = document.getElementById("confirmText");
+  text.textContent = message;
+  modal.style.display = "flex";
+
+  const yes = document.getElementById("confirmYes");
+  const no = document.getElementById("confirmNo");
+
+  const cleanup = () => (modal.style.display = "none");
+
+  yes.onclick = () => {
+    onConfirm();
+    cleanup();
+  };
+  no.onclick = cleanup;
+}
+
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+<div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p id="confirmText">Are you sure?</p>
+            <button id="confirmYes">Yes</button>
+            <button id="confirmNo">No</button>
+        </div>
+  </div>
+    
+
+
+
+
+
+  <div>
+            <p>Created by: <span id="created-by">John Doe</span></p>
+            <p>Last updated by: <span id="last-updated-by">Jane Smith</span></p>
+            <p>Created on: <span id="created-on">2023-10-01</span></p>
+            <p>Last updated on: <span id="last-updated-on">2023-10-15</span></p>
+            <p>Version: <span id="version">1.0</span></p>
+            <p>Priority: <span id="priority">High</span></p>
+            <p>Tags: <span id="tags">urgent, important</span></p>
+            <p>Attachments: <span id="attachments">file1.txt, file2.jpg</span></p>
+            <p>Comments: <span id="comments">This is a comment.</span></p>
+            <p>Related tasks: <span id="related-tasks">Task 1, Task 2</span></p>
+            <p>Dependencies: <span id="dependencies">Task A, Task B</span></p>
+            <p>Estimated time: <span id="estimated-time">5 hours</span></p>
+            <p>Actual time: <span id="actual-time">4 hours</span></p>
+            <p>Progress: <span id="progress">80%</span></p>
+            <p>Due date: <span id="due-date">2023-10-30</span></p>
+            <p>Notifications: <span id="notifications">Enabled</span></p>
+            <p>History: <span id="history">Task created, Task updated</span></p>
+            <p>Custom fields: <span id="custom-fields">Field1: Value1, Field2: Value2</span></p>
+            <p>Links: <span id="links">Link1, Link2</span></p>
+            <p>Labels: <span id="labels">Label1, Label2</span></p>
+            <p>Watchers: <span id="watchers">User1, User2</span></p>
+            <p>Related issues: <span id="related-issues">Issue1, Issue2</span></p>
+            <p>Risk assessment: <span id="risk-assessment">Low</span></p>
+            <p>Impact analysis: <span id="impact-analysis">Medium</span></p>
+            <p>Compliance requirements: <span id="compliance-requirements">None</span></p>
+            <p>Security considerations: <span id="security-considerations">None</span></p>
+            <p>Performance metrics: <span id="performance-metrics">Good</span></p>
+            <p>Testing requirements: <span id="testing-requirements">Unit tests, Integration tests</span></p>
+            <p>Deployment instructions: <span id="deployment-instructions">Deploy to production</span></p>
+            <p>Rollback plan: <span id="rollback-plan">Revert to previous version</span></p>
+            <p>Integration points: <span id="integration-points">API, Database</span></p>
+            <p>Stakeholders: <span id="stakeholders">Stakeholder1, Stakeholder2</span></p>
+            <p>Budget: <span id="budget">$1000</span></p>
+            <p>Resources: <span id="resources">Resource1, Resource2</span></p>
+            <p>Milestones: <span id="milestones">Milestone1, Milestone2</span></p>
+            <p>Risks: <span id="risks">Risk1, Risk2</span></p>
+            <p>Assumptions: <span id="assumptions">Assumption1, Assumption2</span></p>
+            <p>Constraints: <span id="constraints">Constraint1, Constraint2</span></p>
+            <p>Lessons learned: <span id="lessons-learned">Lesson1, Lesson2</span></p>
+
+  </div>
+        
+
+  
+// Add task input functionality
+document.getElementById("add-task-input").addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    const task = e.target.value.trim();
+    if (task) {
+      const taskList = document.getElementById("task-list");
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox"> ${task}`;
+      taskList.appendChild(li);
+      e.target.value = ""; // Clear input
+    }
+  }
+});
+// Add task input focus
+document.getElementById("add-task-input").addEventListener("focus", (e) => {
+  e.target.placeholder = "Type a new task and press Enter";
+});
+// Add task input blur
+document.getElementById("add-task-input").addEventListener("blur", (e) => {
+  e.target.placeholder = "Add a new task";
+});
+// Add task input placeholder
+document.getElementById("add-task-input").placeholder = "Add a new task";
+// Add task input styling
+document.getElementById("add-task-input").style.cssText =
+  "width: 100%; padding: 10px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px;";
+// Add task input focus styling
+document.getElementById("add-task-input").addEventListener("focus", (e) => {
+  e.target.style.borderColor = "#007bff";
+});
+// Add task input blur styling
+document.getElementById("add-task-input").addEventListener("blur", (e) => {
+  e.target.style.borderColor = "#ccc";
+});
+// Add task input keydown event for Enter key
+document.getElementById("add-task-input").addEventListener("keydown", (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault(); // Prevent form submission
+    const task = e.target.value.trim();
+    if (task) {
+      const taskList = document.getElementById("task-list");
+      const li = document.createElement("li");
+      li.innerHTML = `<input type="checkbox"> ${task}`;
+      taskList.appendChild(li);
+      e.target.value = ""; // Clear input
+    }
+  }
+});
+
+document.querySelectorAll("input[type=checkbox]").forEach((cb) => {
+  cb.addEventListener("change", () => {
+    cb.parentElement.style.textDecoration = cb.checked
+      ? "line-through"
+      : "none";
+  });
+});
+
+
+

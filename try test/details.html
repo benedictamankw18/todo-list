@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 20px;
+    }
+
+    .container {
+        background-color: #4bff3b;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+    .title-detail {
+        color: #000000;
+        text-align: center;
+        text-transform: uppercase;
+        text-decoration: underline;
+        font-size: 24px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+    }
+
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+        width: calc(100% - 30px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        font-size: 16px;
+        color: #333;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        box-sizing: border-box;
+        transition: border-color 0.3s ease;
+    }
+
+    .button-container {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 20px;
+        padding: 0 20px;
+        position: relative;
+    }
+
+    button {
+        padding: 10px 15px;
+        background-color: #28a745;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        width: 150px;
+        box-sizing: border-box;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        margin: 0 10px;
+        text-align: center;
+        position: relative;
+        display: inline-block;
+        text-decoration: none;
+        color: #fff;
+        outline: none;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    #update {
+        background-color: #007bff;
+    }
+
+    #update:hover {
+        background-color: #0056b3;
+    }
+
+    #update:active {
+        background-color: #004085;
+    }
+
+    #add {
+        background-color: #677c6c;
+    }
+
+    #add:hover {
+        background-color: #5a6b5c;
+    }
+
+    #add:active {
+        background-color: #4d5a4f;
+    }
+
+    button:hover {
+        transform: translateY(-2px);
+    }
+
+    .close img {
+        width: 20px;
+        height: 20px;
+    }
+
+    .close img:hover {
+        transform: scale(1.2);
+        transition: transform 0.2s ease;
+        cursor: pointer;
+    }
+
+    .close img:active {
+        transform: scale(0.9);
+    }
+
+    .close img {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    td {
+        padding: 10px;
+        vertical-align: top;
+    }
+
+    td label {
+        width: 100px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    td input,
+    td textarea,
+    td select {
+        width: calc(100% - 120px);
+        margin-left: 30px;
+    }
+
+    td input[type="text"],
+    td input[type="date"],
+    td textarea,
+    td select {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    td input[type="text"]:focus,
+    td input[type="date"]:focus,
+    td textarea:focus,
+    td select:focus {
+        border-color: #007bff;
+        outline: none;
+    }
+
+    td input[type="text"]:focus::placeholder,
+    td input[type="date"]:focus::placeholder,
+    td textarea:focus::placeholder {
+        color: transparent;
+    }
+
+    td input[type="text"]::placeholder,
+    td input[type="date"]::placeholder,
+    td textarea::placeholder {
+        color: #999;
+        font-style: italic;
+    }
+
+    td input[type="text"]:focus::placeholder,
+    td input[type="date"]:focus::placeholder,
+    td textarea:focus::placeholder {
+        color: transparent;
+    }
+
+    .task-form {
+        display: relative;
+        flex-direction: column;
+        overflow: hidden;
+
+    }
+</style>
+
+<body>
+
+    <div class="container">
+        <div class="close"><img src="../asset/img/icon/001-close.png" alt=""></div>
+        <h3 class="title-detail">DETAILS</h3>
+
+        <form id="task-form">
+
+            <table>
+                <tr>
+                    <td><label for="task">TASK</label></td>
+                    <td><input type="text" id="task" name="task" placeholder="Enter task name"></td>
+                </tr>
+                <tr>
+                    <td><label for="entry-date">ENTRY DATE</label></td>
+                    <td><input type="date" id="entry-date" name="entry-date" title="Entry Date"
+                            placeholder="Select entry date"></td>
+                </tr>
+                <tr>
+                    <td><label for="start-date">START DATE</label></td>
+                    <td><input type="date" id="start-date" name="start-date" title="Start Date"
+                            placeholder="Select start date"></td>
+                </tr>
+                <tr>
+                    <td><label for="end-date">END DATE</label></td>
+                    <td><input type="date" id="end-date" name="end-date" title="End Date" placeholder="Select end date">
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="description">DESCRIPTION</label></td>
+                    <td><textarea id="description" name="description" rows="4" cols="50"
+                            placeholder="Enter task description" maxlength="20" minlength="400"></textarea></td>
+                </tr>
+                <tr>
+                    <td><label for="owner">OWNER</label></td>
+                    <td><input type="text" id="owner" name="owner" placeholder="Enter owner name"></td>
+                </tr>
+                <tr>
+                    <td><label for="type">TYPE</label></td>
+                    <td>
+                        <select id="type" name="type">
+                            <option value="bug">Bug</option>
+                            <option value="feature">Feature</option>
+                            <option value="task">Task</option>
+                            <option value="improvement">Improvement</option>
+                            <option value="documentation">Documentation</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="status">STATUS</label></td>
+                    <td>
+                        <select id="status" name="status">
+                            <option value="not-started">Not Started</option>
+                            <option value="in-progress">In Progress</option>
+                            <option value="completed">Completed</option>
+                            <option value="on-hold">On Hold</option>
+                            <option value="cancelled">Cancelled</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+        </form>
+
+        <div class="button-container">
+            <button id="add">ADD</button>
+            <button id="update">UPDATE</button>
+
+        </div>
+    </div>
+
+
+    <style>
+        .show-response {
+            display: none;
+            position: fixed;
+            top: 10px;
+            left: 0;
+            right: 0;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 3s;
+        }
+
+        .show-response-body {
+            background: #00e676;
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+            border-radius: 30px;
+        }
+
+        .show-response-message {
+            color: #000000;
+            font-size: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+    </style>
+
+    <div class="show-response" id="show-response">
+        <div class="show-response-body" id="show-response-body">
+            <p class="show-response-message" id="show-response-message"></p>
+        </div>
+    </div>
+</body>
+<script>
+    const add_task = document.getElementById("add");
+    const update_task = document.getElementById("update");
+    const show_response = document.getElementById("show-response");
+
+    add_task.addEventListener("click", (event) => {
+        const show_response_message = document.getElementById("show-response-message");
+        show_response_message.textContent = "Task Added Successfully!";
+        event.preventDefault();
+        show_response.style.display = "flex";
+        setTimeout(() => {
+            show_response.style.display = "none";
+        }, 3000);
+    });
+
+    update_task.addEventListener("click", (event) => {
+        const show_response_message = document.getElementById("show-response-message");
+        show_response_message.textContent = "Task Update Successfully!";
+        event.preventDefault();
+        show_response.style.display = "flex";
+        setTimeout(() => {
+            show_response.style.display = "none";
+        }, 3000);
+    });
+</script>
+
+</html>

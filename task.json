@@ -1,0 +1,192 @@
+[
+  {
+    "task": "DSD",
+    "entry": "27-05-2025",
+    "start": "27-05-2025",
+    "end": "27-05-2025",
+    "desc": "DSDS",
+    "owner": "SFDDF",
+    "type": "PERSONAL",
+    "status": "COMPLETED"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "DESCRIPTION HERE IT GOES LONG TEXT",
+    "owner": "JASSICA",
+    "type": "PRIVATE",
+    "status": "INCOMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "COMPLETE"
+  },
+  {
+    "task": "DATABASE (MYSQL)",
+    "entry": "23–01–2023",
+    "start": "12–03–2023",
+    "end": "23–05–2023",
+    "desc": "Sync with frontend",
+    "owner": "MYSELF",
+    "type": "PUBLIC",
+    "status": "INCOMPLETE"
+  }
+]

@@ -1,0 +1,142 @@
+body {
+    font-family: monospace;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 20px;
+    color: #222;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input,
+select {
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    overflow-x: hidden;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+thead {
+    background: #e0e0e0;
+}
+
+tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+input[type="text"]:disabled {
+    background: transparent;
+    border: none;
+    color: #333;
+}
+
+.task-table {
+    margin-top: 20px;
+    overflow: auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+
+}
+
+/* Animation */
+.task-table tbody tr {
+    transition: all 0.3s ease-in-out;
+}
+
+.task-table tr.dragging {
+    opacity: 0.5;
+    background: #d0ffd0 !important;
+}
+
+.task-table tbody.flash {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.task-table tr.editing {
+    background-color: #fff3cd !important;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+thead tr:first-child input,
+thead tr:first-child select {
+    width: 100%;
+    font-size: 14px;
+    padding: 4px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+tr.editing {
+    background-color: #fff8e1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}

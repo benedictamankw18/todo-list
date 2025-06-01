@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Task Table</title>
+    <link rel="stylesheet" href="../css/dash.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <h1>📋 Task Manager</h1>
+
+        <div class="filters">
+            <input type="text" id="search" placeholder="Search..." />
+            <label for="filter-status" class="visually-hidden">Filter by Status</label>
+            <select id="filter-status">
+                <option value="">All Statuses</option>
+                <option value="COMPLETE">Complete</option>
+                <option value="INCOMPLETE">Incomplete</option>
+            </select>
+            <label for="filter-owner" class="visually-hidden">Filter by Owner</label>
+            <select id="filter-owner">
+                <option value="">All Owners</option>
+            </select>
+            <button id="exportBtn">📤 Export</button>
+            <label for="importFile" class="visually-hidden">Import tasks (JSON file)</label>
+            <input type="file" id="importFile" accept=".json" title="Import tasks (JSON file)" />
+
+            <button id="bulkDeleteBtn">🗑️ Bulk Delete</button>
+            <button id="bulkCompleteBtn">✅ Mark Complete</button>
+
+
+            <button id="undo-btn">↩️ Undo</button>
+            <button id="redo-btn">↪️ Redo</button>
+            <div id="statusMessage"></div>
+
+        </div>
+
+
+        <div class="task-table">
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <label for="select-all" class="visually-hidden">Select all tasks</label>
+                            <input type="checkbox" id="select-all" class="row-check" data-index="${index}"
+                                title="Select all tasks" ${task.status==="COMPLETE" ? "checked" : "checked" }>
+                        </th>
+
+                        <th><input type=" text" id="new-task" placeholder="New task" /></th>
+                        <th><input type="date" id="new-entry" placeholder="Entry date" title="Entry date" /></th>
+                        <th><input type="date" id="new-start" placeholder="Start date" title="Start date" /></th>
+                        <th><input type="date" id="new-end" placeholder="End date" title="End date" /></th>
+                        <th><input type="text" id="new-desc" placeholder="Description" /></th>
+                        <th><input type="text" id="new-owner" placeholder="Owner" /></th>
+                        <th>
+                            <label for="new-type" class="visually-hidden">Type</label>
+                            <select id="new-type" title="Type">
+                                <option value="">TYPE</option>
+                                <option value="PRIVATE">PRIVATE</option>
+                                <option value="PUBLIC">PUBLIC</option>
+                                <option value="PERSONAL">PERSONAL</option>
+                            </select>
+                        </th>
+                        <th>
+                            <select id="new-status" title="Status">
+                                <option value="">Status</option>
+                                <option value="INCOMPLETE">INCOMPLETE</option>
+                                <option value="COMPLETE">COMPLETE</option>
+                            </select>
+                        </th>
+                        <th><button id="add-btn">➕</button></th>
+                    </tr>
+                </thead>
+
+                <tbody id="taskBody"></tbody>
+            </table>
+        </div>
+
+    </div>
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p id="confirmText">Are you sure?</p>
+            <button id="confirmYes">Yes</button>
+            <button id="confirmNo">No</button>
+        </div>
+    </div>
+
+    <script src="../js/dash.js"></script>
+</body>
+
+</html>
