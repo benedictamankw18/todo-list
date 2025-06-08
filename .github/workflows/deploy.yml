@@ -1,0 +1,24 @@
+name: Auto Deploy to PythonAnywhere
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Upload code to PythonAnywhere
+      run: |
+        sshpass -p "${{ secrets.PA_API_TOKEN }}" scp -o StrictHostKeyChecking=no -r . ${{ secrets.PA_USERNAME }}@ssh.pythonanywhere.com:/home/${{ secrets.PA_USERNAME }}/TODO_LIST
+      env:
+        SSHPASS: ${{ secrets.PA_API_TOKEN }}
+
+    - name: Reload PythonAnywhere web app
+      run: |
+        curl -X POST https://www.pythonanywhere.com/api/v0/user/${{ secrets.PA_USERNAME }}/webapps/${{ secrets.PA_USERNAME }}.pythonanywhere.com/reload/ \
+        -H 'Authorization: Token ${{ secrets.PA_API_TOKEN }}'
