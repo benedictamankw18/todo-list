@@ -19,6 +19,11 @@ jobs:
       with:
         python-version: '3.10'
 
+    - name: Export environment variables
+      run: |
+        echo "DJANGO_SECRET_KEY=${{ secrets.DJANGO_SECRET_KEY }}" >> $GITHUB_ENV
+        echo "DB_NAME=${{ secrets.DB_NAME }}" >> $GITHUB_ENV
+
     - name: Install dependencies
       run: pip install -r requirements.txt
       working-directory: .
@@ -27,6 +32,28 @@ jobs:
       run: python manage.py migrate
       working-directory: django-todo/ToDoList
 
-    - name: Run tests
-      run: python manage.py test
+    - name: Run tests with coverage
+      run: |
+        coverage run manage.py test
+        coverage report
+        coverage html
       working-directory: django-todo/ToDoList
+
+    - name: Upload coverage report
+      uses: actions/upload-artifact@v4
+      with:
+        name: coverage-report
+        path: django-todo/ToDoList/htmlcov/
+
+    - name: Notify on failure
+      if: failure()
+      uses: dawidd6/action-send-mail@v3
+      with:
+        server_address: smtp.gmail.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: GitHub Action Failed 🚨
+        to: you@example.com
+        from: GitHub CI <github@example.com>
+        body: The workflow has failed. Please check the logs.
