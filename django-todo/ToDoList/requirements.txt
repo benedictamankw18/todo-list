@@ -1,0 +1,6 @@
+Django>=5.2
+djangorestframework
+python-decouple
+dj-database-url
+python-dotenv
+# Add other packages as needed
