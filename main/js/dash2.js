@@ -293,6 +293,7 @@ dashboard.addEventListener("click", (event) => {
 });
 
 logout.addEventListener("click", (event) => {
+  localStorage.removeItem("isLoggedIn"); // Remove login status
   location.href = "../html/login.html";
 });
 

@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'main/asset/img/Screenshot 2025-06-04 082524.ico' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'asset/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css' %}"
+    />
+    <style>
+      .settings-container {
+        max-width: 400px;
+        margin: 60px auto;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+        padding: 2rem 2rem 1.5rem 2rem;
+        text-align: center;
+      }
+
+      .settings-container h1 {
+        margin-bottom: 1rem;
+        color: #4e54c8;
+      }
+
+      .settings-list {
+        text-align: left;
+        margin: 2rem 0;
+      }
+
+      .settings-list label {
+        display: block;
+        margin-bottom: 1.2rem;
+        font-weight: 500;
+      }
+
+      .back-link {
+        display: inline-block;
+        margin-top: 1.5rem;
+        color: #4e54c8;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .back-link i {
+        margin-right: 6px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="settings-container">
+      <h1><i class="fa fa-cog"></i> Settings</h1>
+      <div class="settings-list">
+        <label>
+          <input type="checkbox" disabled />
+          Dark Mode (coming soon)
+        </label>
+        <label>
+          <input type="checkbox" disabled />
+          Email Notifications (coming soon)
+        </label>
+        <label>
+          <input type="checkbox" disabled />
+          Task Reminders (coming soon)
+        </label>
+      </div>
+      <a href="{% url 'dashboard' %}" class="back-link"
+        ><i class="fa fa-arrow-left"></i>Back to Dashboard</a
+      >
+    </div>
+    {% if not request.user.is_authenticated %}
+    <script>
+      window.location.href = "/login/";
+    </script>
+    {% endif %}
+  </body>
+</html>

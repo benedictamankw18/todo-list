@@ -5,6 +5,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Smart Task Table</title>
+    <link rel="shortcut icon" href="/main/asset/img/Screenshot 2025-06-04 082524.ico" type="image/x-icon">
+
     <link rel="stylesheet" href="../css/dash.css" />
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
@@ -91,6 +93,12 @@
     </div>
 
     <script src="../js/dash.js"></script>
+    <script>
+        // Redirect to login if not logged in
+        if (!localStorage.getItem("isLoggedIn")) {
+            window.location.href = "login.html";
+        }
+    </script>
 </body>
 
 </html>

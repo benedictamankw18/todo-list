@@ -1,0 +1,31 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'asset/img/Screenshot 2025-06-04 082524.ico' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/login.css' %}" />
+  </head>
+  <body>
+    <div class="login-container">
+      <h1>LOGIN</h1>
+      <form method="post" action="{% url 'login' %}">
+        {% csrf_token %} {{ form.as_p }}
+        <div class="remember-me">
+          <input type="checkbox" name="remember" id="remember" />
+          <label for="remember">Remember Me</label>
+        </div>
+        <button type="submit">Login</button>
+        {% if form.errors %}
+        <p id="error-message">Invalid username or password.</p>
+        {% endif %}
+      </form>
+    </div>
+  </body>
+</html>

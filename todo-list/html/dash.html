@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager Dashboard</title>
+    <link rel="stylesheet" href="../css/dash.css" />
+    <link rel="stylesheet" href="../asset/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="title">Task Manager</div>
+        <div class="user-box">
+            <span>Welcome, User</span>
+            <div class="avatar"><img src="../asset/img/user.png" alt="User Avatar"></div>
+            <div class="dropdown">
+                <span class="dropdown-icon"><img src="../asset/img/icon/Untitled-1.png" alt="Menu"></span>
+                <div class="dropdown-content">
+                    <div class="menu" id="task-management">Task Management</div>
+                    <div class="menu" id="dashboard">Dashboard</div>
+                    <div class="menu" id="statistic">Statistics</div>
+                    <div class="menu" id="info">Info</div>
+                    <div class="menu" id="setting">Settings</div>
+                    <div class="menu" id="logout">Logout</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="filters">
+            <input type="text" id="search" placeholder="Search tasks..." />
+            <select id="filter-status">
+                <option value="">All Statuses</option>
+                <option value="COMPLETE">Complete</option>
+                <option value="INCOMPLETE">Incomplete</option>
+            </select>
+            <select id="filter-owner">
+                <option value="">All Owners</option>
+            </select>
+            <button id="exportBtn">Export</button>
+            <button id="bulkDeleteBtn">Bulk Delete</button>
+            <button id="bulkCompleteBtn">Mark Complete</button>
+        </div>
+
+        <div class="task-table">
+            <table id="taskTable">
+                <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" id="select-all" title="Select all tasks" />
+                        </th>
+                        <th>Task</th>
+                        <th>Entry Date</th>
+                        <th>Start Date</th>
+                        <th>End Date</th>
+                        <th>Description</th>
+                        <th>Owner</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="taskBody">
+                    <!-- Dynamically generated rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <p id="confirmText">Are you sure?</p>
+            <button id="confirmYes">Yes</button>
+            <button id="confirmNo">No</button>
+        </div>
+    </div>
+
+    <script src="../js/dash.js"></script>
+</body>
+
+</html>

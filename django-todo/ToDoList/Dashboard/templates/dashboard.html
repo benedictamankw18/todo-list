@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'asset/img/Screenshot 2025-06-04 082524.ico' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/dash2.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'asset/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css' %}"
+    />
+  </head>
+  <body>
+    <header>
+      <div id="title" class="title">
+        <a href="{% url 'welcome' %}">TO-DO-LIST</a>
+      </div>
+      <div class="user-box">
+        <span>{{ request.user.username }}</span>
+        <div class="avatar">
+          <img src="{% static 'asset/img/user.png' %}" alt="" />
+        </div>
+        <div class="dropdown">
+          <span class="dropdown-icon"
+            ><img src="{% static 'asset/img/icon/Untitled-1.png' %}" alt=""
+          /></span>
+          <div class="dropdown-content">
+            <div class="menu" id="task-management">TASK MANAGEMENT</div>
+            <div class="menu" id="dashboard">DASHBOARD</div>
+            <div class="menu" id="statistic">STATISTIC</div>
+            <div class="menu" id="info">INFO</div>
+            <div class="menu" id="setting">SETTING</div>
+            <div class="menu" id="logout">LOGOUT</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <aside>
+        <div class="box login">
+          <h3>LAST LOGIN</h3>
+          <ul class="aside-tab-scroll">
+            <li>
+              {% if last_login %} {{ last_login|date:"D, d M Y H:i" }}
+              <span class="status online"></span> {% else %} Never logged in
+              <span class="status offline"></span>
+              {% endif %}
+            </li>
+          </ul>
+        </div>
+
+        <div class="box socail">
+          <h3>SOCIAL</h3>
+          <ul class="aside-tab-scroll">
+            {% for s in socials %}
+            <li>
+              <a href="{{ s.url }}" target="_blank">
+                {{ s.name }} ➝
+                <span class="share-socail">
+                  {% if s.icon %}
+                  <i class="{{ s.icon }}"></i>
+                  {% else %}
+                  <i class="fa fa-arrow-up-right-from-square"></i>
+                  {% endif %}
+                </span>
+              </a>
+            </li>
+            {% empty %}
+            <li>No social links found.</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </aside>
+
+      <main>
+        <div class="todo-header">
+          <h2>TO–DO LIST</h2>
+          <div class="icons">
+            <span class="task-icons-btn" id="refresh"
+              ><img src="{% static 'asset/img/icon/007-undo.png' %}" alt=""
+            /></span>
+            <span class="task-icons-btn" id="add-task-btn"
+              ><img
+                src="{% static 'asset/img/icon/008-image-gallery.png' %}"
+                alt=""
+            /></span>
+            <span class="task-icons-btn" id="delete"
+              ><img src="{% static 'asset/img/icon/005-clear-1.png' %}" alt=""
+            /></span>
+            <span class="task-icons-btn" id="clear"
+              ><img src="{% static 'asset/img/icon/003-clean.png' %}" alt=""
+            /></span>
+          </div>
+        </div>
+
+        <div class="task-table">
+          <table>
+            <thead>
+              <tr>
+                <th>
+                  <label for="select-all" class="visually-hidden"
+                    >Select all tasks</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="select-all"
+                    title="Select all tasks"
+                  />
+                </th>
+                <th>
+                  <label for="task-row1-checkbox" class="visually-hidden"
+                    >Task</label
+                  >
+                  Task
+                </th>
+                <th>Entry Date</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Description</th>
+                <th>Owner</th>
+                <th>Type</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for t in tasks %}
+              <tr class="task-row">
+                <td class="task-check">
+                  <label
+                    for="task-row{{ forloop.counter }}-checkbox"
+                    class="visually-hidden"
+                    >Select task</label
+                  >
+                  <input
+                    type="checkbox"
+                    id="task-row{{ forloop.counter }}-checkbox"
+                    class="task-checkbox"
+                    title="Select task"
+                  />
+                </td>
+                <td class="task">{{ t.task }}</td>
+                <td class="entry-date">{{ t.entry }}</td>
+                <td class="start-date">{{ t.start }}</td>
+                <td class="end-date">{{ t.end }}</td>
+                <td class="truncate desc">{{ t.desc }}</td>
+                <td class="owner">{{ t.owner }}</td>
+                <td class="type">{{ t.type|upper }}</td>
+                <td class="status">{{ t.status|upper }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="9">No tasks found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <p id="confirmText">Are you sure?</p>
+        <button class="confirm-btn" id="confirmYes">Yes</button>
+        <button class="confirm-btn" id="confirmNo">No</button>
+      </div>
+    </div>
+
+    <div id="AddUpdate" class="modal">
+      <div class="modal-content">
+        <div class="container-detail" id="container-detail">
+          <div class="close" id="close">
+            <img src="{% static 'asset/img/icon/001-close.png' %}" alt="" />
+          </div>
+          <h3 class="title-detail">DETAILS</h3>
+
+          <form id="task-form" method="post" action="{% url 'dashboard' %}">
+            {% csrf_token %}
+            <table>
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th>Input</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><label for="task">TASK</label></td>
+                  <td>
+                    <input
+                      type="text"
+                      id="task"
+                      name="task"
+                      placeholder="Enter task name"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="entry-date">ENTRY DATE</label></td>
+                  <td>
+                    <input
+                      type="date"
+                      id="entry-date"
+                      name="entry-date"
+                      title="Entry Date"
+                      placeholder="Select entry date"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="start-date">START DATE</label></td>
+                  <td>
+                    <input
+                      type="date"
+                      id="start-date"
+                      name="start-date"
+                      title="Start Date"
+                      placeholder="Select start date"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="end-date">END DATE</label></td>
+                  <td>
+                    <input
+                      type="date"
+                      id="end-date"
+                      name="end-date"
+                      title="End Date"
+                      placeholder="Select end date"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="description">DESCRIPTION</label></td>
+                  <td>
+                    <textarea
+                      id="description"
+                      name="description"
+                      rows="4"
+                      cols="50"
+                      placeholder="Enter task description"
+                    ></textarea>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="owner">OWNER</label></td>
+                  <td>
+                    <input
+                      type="text"
+                      id="owner"
+                      name="owner"
+                      placeholder="Enter owner name"
+                    />
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="type">TYPE</label></td>
+                  <td>
+                    <select id="type" name="type">
+                      <option value="personal">PERSONAL</option>
+                      <option value="private">PRIVATE</option>
+                      <option value="public">PUBLIC</option>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td><label for="status">STATUS</label></td>
+                  <td>
+                    <select id="status" name="status">
+                      <option value="completed">COMPLETED</option>
+                      <option value="incomplete">INCOMPLETE</option>
+                    </select>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="button-container">
+              <button id="add-task" type="submit">ADD</button>
+              <button id="update-task" type="submit">UPDATE</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="show-response" id="show-response">
+      <div class="show-response-body" id="show-response-body">
+        <p class="show-response-message" id="show-response-message"></p>
+      </div>
+    </div>
+
+    <div class="working-Container modal" id="working-Container">
+      <div class="working-body" id="working-body">
+        <div class="working-img">
+          <img src="{% static 'asset/img/icon/006-cancelled.png' %}" alt="" />
+        </div>
+        <p class="work">WORKING</p>
+        <p class="on-it">ON IT</p>
+      </div>
+    </div>
+
+    <footer></footer>
+
+    <script src="{% static 'js/dash2.js' %}"></script>
+    <script>
+      {% if not request.user.is_authenticated %}
+        window.location.href = "/login/";
+      {% endif %}
+    </script>
+  </body>
+</html>

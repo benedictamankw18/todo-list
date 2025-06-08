@@ -1,0 +1,147 @@
+<!-- filepath: d:\todo list\django-todo\ToDoList\TaskManager\templates\taskManager.html -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Task Table</title>
+    <link
+      rel="shortcut icon"
+      href="{% static 'asset/img/Screenshot 2025-06-04 082524.ico' %}"
+      type="image/x-icon"
+    />
+    <link rel="stylesheet" href="{% static 'css/dash.css' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>📋 Task Manager</h1>
+
+      <div class="filters">
+        <input type="text" id="search" placeholder="Search..." />
+        <label for="filter-status" class="visually-hidden"
+          >Filter by Status</label
+        >
+        <select id="filter-status">
+          <option value="">All Statuses</option>
+          <option value="COMPLETE">Complete</option>
+          <option value="INCOMPLETE">Incomplete</option>
+        </select>
+        <label for="filter-owner" class="visually-hidden"
+          >Filter by Owner</label
+        >
+        <select id="filter-owner">
+          <option value="">All Owners</option>
+        </select>
+        <button id="exportBtn">📤 Export</button>
+        <label for="importFile" class="visually-hidden"
+          >Import tasks (JSON file)</label
+        >
+        <input
+          type="file"
+          id="importFile"
+          accept=".json"
+          title="Import tasks (JSON file)"
+        />
+        <button id="bulkDeleteBtn">🗑️ Bulk Delete</button>
+        <button id="bulkCompleteBtn">✅ Mark Complete</button>
+        <button id="undo-btn">↩️ Undo</button>
+        <button id="redo-btn">↪️ Redo</button>
+        <div id="statusMessage"></div>
+      </div>
+      <form method="post" class="add-task-form">
+        {% csrf_token %}
+        <input type="text" name="task" placeholder="Task" required />
+        <input type="date" name="entry" required />
+        <input type="date" name="start" required />
+        <input type="date" name="end" required />
+        <input type="text" name="desc" placeholder="Description" required />
+        <input type="text" name="owner" placeholder="Owner" required />
+        <select name="type">
+          <option value="PRIVATE">PRIVATE</option>
+          <option value="PUBLIC">PUBLIC</option>
+          <option value="PERSONAL">PERSONAL</option>
+        </select>
+        <select name="status">
+          <option value="INCOMPLETE">INCOMPLETE</option>
+          <option value="COMPLETE">COMPLETE</option>
+        </select>
+        <button type="submit">Add Task</button>
+      </form>
+      <div class="task-table">
+        <table id="taskTable">
+          <thead>
+            <tr>
+              {% comment %}
+              <th>
+                <label for="select-all" class="visually-hidden"
+                  >Select all tasks</label
+                >
+                <input
+                  type="checkbox"
+                  id="select-all"
+                  class="row-check"
+                  title="Select all tasks"
+                />
+              </th>
+              {% endcomment %}
+
+              <th>Task</th>
+              <th>Entry</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Description</th>
+              <th>Owner</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="taskBody">
+            {% for task in tasks %}
+            <tr>
+              {% comment %}
+              <td><input type="checkbox" class="row-check" /></td>
+              {% endcomment %}
+              <td>{{ task.task }}</td>
+              <td>{{ task.entry }}</td>
+              <td>{{ task.start }}</td>
+              <td>{{ task.end }}</td>
+              <td>{{ task.desc }}</td>
+              <td>{{ task.owner }}</td>
+              <td>{{ task.type }}</td>
+              <td>{{ task.status }}</td>
+              <td>
+                <!-- Example action buttons -->
+                <button class="edit-btn" data-id="{{ task.id }}">✏️</button>
+                <button class="delete-btn" data-id="{{ task.id }}">🗑️</button>
+              </td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="10" style="text-align: center">No tasks found.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="confirmModal" class="modal">
+      <div class="modal-content">
+        <p id="confirmText">Are you sure?</p>
+        <button id="confirmYes">Yes</button>
+        <button id="confirmNo">No</button>
+      </div>
+    </div>
+
+    <script src="{% static 'js/dash.js' %}"></script>
+    <script>
+      // Redirect to login if not logged in
+      {% if not request.user.is_authenticated %}
+        window.location.href = "/login/";
+      {% endif %}
+    </script>
+  </body>
+</html>

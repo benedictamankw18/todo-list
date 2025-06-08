@@ -107,7 +107,20 @@ header {
     font-size: 30px;
     font-weight: bold;
     cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
+
+.title a:hover {
+    color: #00572d;
+    transition: color 3s ease;
+}
+
+.title a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
 
 .user-box {
     display: flex;

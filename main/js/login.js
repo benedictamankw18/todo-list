@@ -20,8 +20,11 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     localStorage.removeItem("savedUsername");
   }
 
+  // Set login status
+  localStorage.setItem("isLoggedIn", "true");
+
   alert("Logged in successfully! ✅");
-  location.href = "./../html/dash2.html";
+  location.href = "./../index.html";
 });
 
 window.addEventListener("DOMContentLoaded", () => {
