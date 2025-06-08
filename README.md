@@ -16,13 +16,13 @@ A Django-based To-Do List application for managing daily tasks with user authent
 
 ## Screenshots
 <!-- Add your screenshots here -->
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\dashboard.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\login.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\dashboarddrop.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\Welcome.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\taskManager.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\setting.png)
-![Dashboard Screenshot](todo list\django-todo\ToDoList\screenshoot\workingOnIt.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/dashboard.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/login.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/dashboarddrop.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/Welcome.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/taskManager.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/setting.png)
+![Dashboard Screenshot](django-todo/ToDoList/screenshoot/workingOnIt.png)
 
 ## Setup Instructions
 
