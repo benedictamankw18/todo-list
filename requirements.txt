@@ -3,4 +3,5 @@ djangorestframework
 python-decouple
 dj-database-url
 python-dotenv
+coverage
 # Add other packages as needed
