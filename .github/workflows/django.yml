@@ -8,11 +8,10 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
+    - name: Checkout code
       uses: actions/checkout@v4
 
     - name: Set up Python
@@ -22,13 +21,15 @@ jobs:
 
     - name: Install dependencies
       run: |
-        python -m pip install --upgrade pip
+        cd ToDoList
         pip install -r requirements.txt
 
     - name: Run migrations
       run: |
+        cd ToDoList
         python manage.py migrate
 
     - name: Run tests
       run: |
+        cd ToDoList
         python manage.py test
