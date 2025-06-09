@@ -1,0 +1,765 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: monospace;
+    background: #000000;
+    color: #000;
+    overflow: hidden;
+}
+
+header,
+footer,
+.container {
+    max-width: 1400px;
+    margin: auto;
+}
+
+header {
+    background: #00e676;
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    border-radius: 10px;
+    margin-top: 10px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #05e002;
+    min-width: 170px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 5;
+    margin-left: -50px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 10px;
+    top: 100%;
+    left: 0;
+    right: 0;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown .dropdown-content .menu {
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 5px;
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-color: #00e676 transparent;
+    /* For Firefox */
+    scrollbar-width: thin;
+
+    /* For Firefox */
+    /* For Chrome, Edge, and Safari */
+    .dropdown .dropdown-content .menu::-webkit-scrollbar {
+        width: 8px;
+        background: transparent;
+    }
+
+    .dropdown .dropdown-content .menu::-webkit-scrollbar-thumb {
+        background: #00e676;
+        border-radius: 10px;
+    }
+
+    .dropdown .dropdown-content .menu::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+.dropdown .dropdown-content .menu:hover {
+    background: #00e676;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown .dropdown-content .menu a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown .dropdown-content .menu a:hover {
+    background-color: #f1f1f1;
+}
+
+
+.title {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.title a:hover {
+    color: #00572d;
+    transition: color 3s ease;
+}
+
+.title a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+
+.user-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
+    margin-left: auto;
+    margin-right: 20px;
+    transition: background 0.3s ease;
+    cursor: pointer;
+}
+
+.user-box .avatar {
+    background: cyan;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+
+.avatar img {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+.container {
+    display: flex;
+    padding: 20px;
+    gap: 20px;
+    height: 610px;
+    overflow-y: hidden;
+}
+
+aside {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+.box {
+    background: #00ff5e;
+    padding: 10px;
+    border-radius: 10px;
+    color: #000;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    position: relative;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #00e676 transparent;
+    cursor: default;
+
+    /* For Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #00e676;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+.box h3 {
+    font-size: 16px;
+    padding-left: 10px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    position: relative;
+    background-color: #00e676;
+}
+
+.box ul li {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.aside-tab-scroll {
+
+    margin-top: 0px;
+}
+
+.status {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.status.online {
+    background: red;
+}
+
+.status.offline {
+    background: #0ff;
+}
+
+.login {
+    height: 300px;
+}
+
+.socail {
+    height: 250px;
+}
+
+.task-icons-btn {
+    cursor: pointer;
+    margin: auto 5px;
+    padding: 15px 5px 5px;
+    text-align: center;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.task-icons-btn:hover {
+    box-shadow: 2px 3px 2px #009a50;
+    border: #000 1px solid;
+}
+
+main {
+    flex: 1;
+    background: #00ff5e;
+    padding: 20px;
+    border-radius: 10px;
+    overflow-x: hidden;
+    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #00e676 transparent;
+
+    /* For Chrome, Edge, and Safari */
+    &::-webkit-scrollbar {
+        width: 8px;
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #00e676;
+        border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+}
+
+.share-socail {
+    cursor: pointer;
+}
+
+.todo-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+tbody {
+    overflow-x: hidden;
+}
+
+th,
+td {
+    text-align: left;
+    padding: 10px;
+}
+
+th {
+    font-size: 16px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #000;
+}
+
+td input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+footer {
+    /* margin: 20px; */
+    height: 60px;
+    background: #00e676;
+    border-radius: 10px;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+.task-table {
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+}
+
+.task-table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: monospace;
+    font-size: 14px;
+    text-align: left;
+    color: #222;
+}
+
+.task-table th,
+.task-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+
+.task-table th:first-child,
+.task-table td:first-child {
+    width: 40px;
+    text-align: center;
+}
+
+.task-table tr:nth-child(even) {
+    background-color: #f8f8f8;
+}
+
+.task-table thead {
+    background-color: #eee;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.truncate {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.container-detail {
+    background-color: #4bff3b;
+    padding: 5px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+
+.title-detail {
+    color: #000000;
+    text-align: center;
+    text-transform: uppercase;
+    text-decoration: underline;
+    font-size: 24px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 0px;
+}
+
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+    width: calc(100% - 30px);
+    padding: 5px;
+    margin-bottom: 0px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    font-size: 16px;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    padding: 0 20px;
+    position: relative;
+}
+
+
+button {
+    padding: 10px 15px;
+    background-color: #28a745;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 150px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    outline: none;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+.update-task {
+    background-color: #007bff;
+}
+
+.update-task:hover {
+    background-color: #0056b3;
+}
+
+.update-task:active {
+    background-color: #004085;
+}
+
+.add-task {
+    background-color: #677c6c;
+}
+
+.add-task:hover {
+    background-color: #5a6b5c;
+}
+
+.add-task:active {
+    background-color: #4d5a4f;
+}
+
+
+
+button:hover {
+    transform: translateY(-2px);
+}
+
+.close img {
+    width: 20px;
+    height: 20px;
+}
+
+.close img:hover {
+    transform: scale(1.2);
+    transition: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.close img:active {
+    transform: scale(0.9);
+}
+
+.close img {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+
+td {
+    padding: 10px;
+    vertical-align: top;
+}
+
+
+td label {
+    width: 100px;
+    text-align: left;
+    font-weight: bold;
+    font-size: large;
+}
+
+
+.task-form td input,
+.task-form td textarea,
+.task-form td select {
+    width: calc(100% - 120px);
+    margin-left: 30px;
+}
+
+
+td input[type="text"],
+td input[type="date"],
+td textarea,
+td select {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+td input[type="text"]:focus,
+td input[type="date"]:focus,
+td textarea:focus,
+td select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+td input[type="text"]:focus::placeholder,
+td input[type="date"]:focus::placeholder,
+td textarea:focus::placeholder {
+    color: transparent;
+}
+
+td input[type="text"]::placeholder,
+td input[type="date"]::placeholder,
+td textarea::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+
+td input[type="text"]:focus::placeholder,
+td input[type="date"]:focus::placeholder,
+td textarea:focus::placeholder {
+    color: transparent;
+}
+
+.task-form {
+    display: relative;
+    flex-direction: column;
+    overflow: hidden;
+
+}
+
+/**/
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #00e676;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+#confirmText {
+    color: #000000;
+}
+
+.confirm-btn {
+    margin-top: 20px;
+}
+
+#confirmYes {
+    background-color: #00ff1a;
+}
+
+#confirmNo {
+    background-color: #f74e4e;
+}
+
+#confirmYes:hover {
+    background-color: #009a50;
+}
+
+#confirmNo:hover {
+    background-color: #9a0000;
+}
+
+.show-response {
+    display: none;
+    position: fixed;
+    top: 10px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: all 3s;
+}
+
+.show-response-body {
+    background: #00e676;
+    padding: 30px;
+    border-radius: 8px;
+    text-align: center;
+    border-radius: 30px;
+}
+
+.show-response-message {
+    color: #000000;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.working-Container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.working-body {
+    background: #1be600da;
+    padding: 50px 90px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.working-img img {
+    width: 80px;
+    margin: 0;
+}
+
+.work,
+.on-it {
+    font-size: 40px;
+    font-weight: 900;
+    margin: 0;
+    padding-bottom: 10px;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 768px) {
+
+    .task-table table,
+    .task-table thead,
+    .task-table tbody,
+    .task-table th,
+    .task-table td,
+    .task-table tr {
+        display: block;
+    }
+
+    .task-table tr {
+        margin-bottom: 15px;
+    }
+
+    .task-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .task-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 12px;
+        width: 45%;
+        padding-right: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .task-table th {
+        display: none;
+    }
+}
+
+
+@media screen and (max-width: 600px) {
+    body {
+        overflow: auto;
+    }
+
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .user-box {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dropdown-content {
+        left: auto;
+        right: 0;
+        margin-left: 0;
+    }
+
+    aside {
+        width: 100%;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+}

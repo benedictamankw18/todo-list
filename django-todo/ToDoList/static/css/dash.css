@@ -1,0 +1,210 @@
+body {
+    font-family: monospace;
+    background: #181c20;
+    margin: 0;
+    padding: 20px;
+    color: #f8f8f8;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.filters {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+input,
+select {
+    padding: 6px 10px;
+    font-size: 14px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: transparent;
+    border-radius: 8px;
+    overflow-x: hidden;
+}
+
+th,
+td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #333;
+    color: #f8f8f8;
+}
+
+thead {
+    background: #1a1d21;
+}
+
+tr:nth-child(even) {
+    background: #22272b;
+}
+
+input[type="text"]:disabled {
+    background: transparent;
+    border: none;
+    color: #333;
+}
+
+.task-table {
+    margin-top: 20px;
+    overflow: auto;
+    background: #23272b;
+    border-radius: 10px;
+    padding: 15px;
+
+}
+
+/* Animation */
+.task-table tbody tr {
+    transition: all 0.3s ease-in-out;
+}
+
+.task-table tr.dragging {
+    opacity: 0.5;
+    background: #d0ffd0 !important;
+}
+
+.task-table tbody.flash {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.98);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.task-table tr.editing {
+    background-color: #fff3cd !important;
+    color: #222;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+thead tr:first-child input,
+thead tr:first-child select {
+    width: 100%;
+    font-size: 14px;
+    padding: 4px;
+    box-sizing: border-box;
+    text-transform: uppercase;
+}
+
+tr.editing {
+    background-color: #fff8e1;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+/* Add Task Form Styling */
+.add-task-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 22px;
+    background: #23272b;
+    padding: 16px 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+.add-task-form input[type="text"],
+.add-task-form input[type="date"],
+.add-task-form select {
+    padding: 8px 12px;
+    border: 1.5px solid #00e676;
+    border-radius: 6px;
+    background: #181c20;
+    color: #fff;
+    font-size: 15px;
+    transition: border 0.2s, background 0.2s;
+    min-width: 120px;
+}
+
+.add-task-form input[type="text"]:focus,
+.add-task-form input[type="date"]:focus,
+.add-task-form select:focus {
+    border: 2px solid #00e676;
+    outline: none;
+    background: #23272b;
+}
+
+.add-task-form button[type="submit"] {
+    background: linear-gradient(90deg, #00e676 60%, #28a745 100%);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 9px 22px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    margin-left: 8px;
+}
+
+.add-task-form button[type="submit"]:hover {
+    background: #009a50;
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Responsive for small screens */
+@media (max-width: 900px) {
+    .add-task-form {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px 6px;
+    }
+
+    .add-task-form input,
+    .add-task-form select {
+        min-width: 100%;
+    }
+}
