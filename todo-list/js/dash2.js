@@ -1,14 +1,19 @@
-// filepath: d:\todo list\main\js\dash2.js
 let undoStack = [];
 let redoStack = [];
 
+const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
 function showStatus(msg, timeout = 2000) {
   const status = document.getElementById("statusMessage");
-  status.textContent = msg;
-  setTimeout(() => (status.textContent = ""), timeout);
+  if (status) {
+    status.textContent = msg;
+    setTimeout(() => (status.textContent = ""), timeout);
+  }
 }
 
-const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+function save() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
 
 function renderTable(data) {
   const tbody = document.getElementById("taskBody");
@@ -35,20 +40,36 @@ function renderTable(data) {
   });
 }
 
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+function confirmAction(message, callback) {
+  const modal = document.getElementById("confirmModal");
+  const confirmText = document.getElementById("confirmText");
+  const confirmYes = document.getElementById("confirmYes");
+  const confirmNo = document.getElementById("confirmNo");
+
+  confirmText.textContent = message;
+  modal.style.display = "block";
+
+  confirmYes.onclick = () => {
+    modal.style.display = "none";
+    callback();
+  };
+
+  confirmNo.onclick = () => {
+    modal.style.display = "none";
+  };
 }
 
+// Add Task Button functionality
 document.getElementById("add-task-btn").addEventListener("click", () => {
   const task = {
-    task: document.getElementById("task").value,
+    task: document.getElementById("task").value.trim(),
     entry: document.getElementById("entry-date").value,
     start: document.getElementById("start-date").value,
     end: document.getElementById("end-date").value,
-    desc: document.getElementById("description").value,
-    owner: document.getElementById("owner").value,
-    type: document.getElementById("type").value,
-    status: document.getElementById("status").value,
+    desc: document.getElementById("description").value.trim(),
+    owner: document.getElementById("owner").value.trim(),
+    type: document.getElementById("type").value.trim(),
+    status: document.getElementById("status").value.trim(),
   };
 
   if (!task.task || !task.owner) {
@@ -61,6 +82,7 @@ document.getElementById("add-task-btn").addEventListener("click", () => {
   renderTable(tasks);
 });
 
+// Delete selected tasks
 document.getElementById("delete").addEventListener("click", () => {
   const selected = [...document.querySelectorAll(".task-checkbox:checked")].map(
     (cb) => parseInt(cb.dataset.index)
@@ -72,19 +94,21 @@ document.getElementById("delete").addEventListener("click", () => {
   }
 
   confirmAction(`Delete ${selected.length} task(s)?`, () => {
-    selected.forEach((index) => tasks.splice(index, 1));
+    selected.sort((a, b) => b - a).forEach((index) => tasks.splice(index, 1));
     save();
     renderTable(tasks);
   });
 });
 
-document.querySelectorAll(".close").forEach((el) => {
-  el.addEventListener("click", () => {
-    const index = parseInt(el.dataset.index);
+// Delete individual tasks using event delegation
+document.getElementById("taskBody").addEventListener("click", (e) => {
+  if (e.target.classList.contains("close")) {
+    const index = parseInt(e.target.dataset.index);
     tasks.splice(index, 1);
     save();
     renderTable(tasks);
-  });
+  }
 });
 
+// Initial render
 renderTable(tasks);
