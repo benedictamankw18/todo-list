@@ -1,394 +1,304 @@
-// import { save } from "./dash.js";
+// =========================
+// Dashboard Task Manager JS
+// =========================
 
-// Placeholder if you'd like to add interactivity later
-// console.log("Dashboard loaded!");
-const select_all = document.getElementById("select-all");
+// Cache DOM elements for reuse
+const selectAllCheckbox = document.getElementById("select-all");
+const clearBtn = document.getElementById("clear");
+const refreshBtn = document.getElementById("refresh");
+const addTaskBtn = document.getElementById("add-task-btn");
+const deleteBtn = document.getElementById("delete");
+const addTaskConfirmBtn = document.getElementById("add-task");
+const updateTaskConfirmBtn = document.getElementById("update-task");
+const showResponse = document.getElementById("show-response");
+const showResponseMessage = document.getElementById("show-response-message");
 
-document.querySelectorAll(".task-checkbox").forEach((a) => {
-  select_all.addEventListener("change", () => {
-    a.checked = select_all.checked;
+// Variables for tracking selected task
+let undoStack = [];
+let taskname = "";
+let owner = "";
+
+// -----------------------------------
+// Helper Functions
+// -----------------------------------
+
+function saveTasks() {
+  localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+function formatDate(dateStr) {
+  if (!dateStr) return "";
+  const [year, month, day] = dateStr.split("-");
+  return `${day}–${month}–${year}`;
+}
+
+function formatDateForInput(dateString) {
+  if (!dateString) return "";
+  const sep = dateString.includes("–") ? "–" : "/";
+  const parts = dateString.split(sep).map(p => p.trim());
+  if (parts.length !== 3) return dateString;
+
+  let [day, month, year] = parts;
+  if (Number(month) > 12) [day, month] = [month, day]; // fallback swap if month/day confused
+  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
+}
+
+function clearAddInputs() {
+  ["task", "entry-date", "start-date", "end-date", "description", "owner"].forEach(id => {
+    document.getElementById(id).value = "";
   });
-});
+}
 
-document.querySelectorAll(".close").forEach((el) => {
-  el.addEventListener("click", () => {
-    el.closest(".modal").style.display = "none";
-  });
-});
-
-let clearBtn = document.getElementById("clear");
-let refresh = document.getElementById("refresh");
-let addTaskBtn = document.getElementById("add-task-btn");
-let deleteBtn = document.getElementById("delete");
+function showTemporaryMessage(message, duration = 3000) {
+  showResponseMessage.textContent = message;
+  showResponse.style.display = "flex";
+  setTimeout(() => {
+    showResponse.style.display = "none";
+  }, duration);
+}
 
 function confirmAction(message, onConfirm) {
   const modal = document.getElementById("confirmModal");
   const text = document.getElementById("confirmText");
+  const yesBtn = document.getElementById("confirmYes");
+  const noBtn = document.getElementById("confirmNo");
+
   text.textContent = message;
   modal.style.display = "flex";
-  const yes = document.getElementById("confirmYes");
-  const no = document.getElementById("confirmNo");
 
-  const cleanup = () => (modal.style.display = "none");
+  const cleanup = () => {
+    modal.style.display = "none";
+    yesBtn.onclick = null;
+    noBtn.onclick = null;
+  };
 
-  yes.onclick = () => {
+  yesBtn.onclick = () => {
     onConfirm();
     cleanup();
   };
-  no.onclick = cleanup;
+  noBtn.onclick = cleanup;
 }
 
-function AddUpdateAction() {
-  const AddUpdate = document.getElementById("AddUpdate");
-  AddUpdate.style.display = "flex";
-  const close = document.getElementById("close");
-
-  const cleanup = () => (AddUpdate.style.display = "none");
-  close.onclick = cleanup;
+function toggleAddUpdateModal(show = true) {
+  const modal = document.getElementById("AddUpdate");
+  modal.style.display = show ? "flex" : "none";
 }
 
-// let container_detail = document.getElementById("container-detail");
-clearBtn.addEventListener("click", () => {
-  document.querySelectorAll(".task-checkbox").forEach((cb) => {
-    cb.checked = true;
-    cb.parentElement.style.textDecoration = "none";
+function closeModals() {
+  document.querySelectorAll(".modal").forEach(modal => {
+    modal.style.display = "none";
   });
-  confirmAction("Are you sure you want to clear all tasks?", () => {
-    // console.log("Dashboard clear");
+}
 
-    const selected = [
-      ...document.querySelectorAll(".task-checkbox:checked"),
-    ].map((cb) => parseInt(cb.dataset.index));
-    // if (!selected.length) return showStatus("No rows selected ❗");
+// -----------------------------------
+// Event Listeners Setup
+// -----------------------------------
 
-    undoStack.push(JSON.parse(JSON.stringify(tasks)));
-    for (let i = selected.length - 1; i >= 0; i--) {
-      tasks.splice(selected[i], 1);
-    }
-    save();
-    location.reload();
+// Select all checkboxes when master checkbox changes
+selectAllCheckbox.addEventListener("change", () => {
+  document.querySelectorAll(".task-checkbox").forEach(cb => {
+    cb.checked = selectAllCheckbox.checked;
   });
 });
 
-refresh.addEventListener("click", () => {
-  confirmAction("Are you sure you want to refresh the dashboard?", () => {
-    location.reload();
-  });
-});
-addTaskBtn.addEventListener("click", () => {
-  AddUpdateAction();
-});
-
-// Modal close functionality
-document.querySelectorAll(".close").forEach((el) => {
+// Close modal buttons
+document.querySelectorAll(".close").forEach(el => {
   el.addEventListener("click", () => {
     el.closest(".modal").style.display = "none";
   });
 });
-// Close modal on outside click
-window.addEventListener("click", (event) => {
-  if (event.target.classList.contains("modal")) {
-    event.target.style.display = "none";
-  }
-});
-// Close modal on Escape key
-window.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") {
-    document.querySelectorAll(".modal").forEach((modal) => {
-      modal.style.display = "none";
-    });
+
+// Close modal when clicking outside modal content
+window.addEventListener("click", e => {
+  if (e.target.classList.contains("modal")) {
+    e.target.style.display = "none";
   }
 });
 
-const add_task = document.getElementById("add-task");
-const update_task = document.getElementById("update-task");
-const show_response = document.getElementById("show-response");
+// Close modal on Escape key press
+window.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeModals();
+});
 
-function clearAddInputs() {
-  [
-    "task",
-    "entry-date",
-    "start-date",
-    "end-date",
-    "description",
-    "owner",
-  ].forEach((id) => (document.getElementById(id).value = ""));
-}
-function formatDate(dateStr) {
-  if (!dateStr) return "";
-  const [y, m, d] = dateStr.split("-");
-  return `${d}–${m}–${y}`;
-}
-add_task.addEventListener("click", (event) => {
-  const task = {
+// Clear all checked tasks
+clearBtn.addEventListener("click", () => {
+  // Check all checkboxes and reset styles
+  document.querySelectorAll(".task-checkbox").forEach(cb => {
+    cb.checked = true;
+    cb.parentElement.style.textDecoration = "none";
+  });
+
+  confirmAction("Are you sure you want to clear all tasks?", () => {
+    const selectedIndices = [...document.querySelectorAll(".task-checkbox:checked")]
+      .map(cb => parseInt(cb.dataset.index));
+
+    undoStack.push(JSON.parse(JSON.stringify(tasks)));
+    // Remove selected tasks from tasks array (iterate backwards to avoid index issues)
+    for (let i = selectedIndices.length - 1; i >= 0; i--) {
+      tasks.splice(selectedIndices[i], 1);
+    }
+    saveTasks();
+    location.reload();
+  });
+});
+
+// Refresh dashboard
+refreshBtn.addEventListener("click", () => {
+  confirmAction("Are you sure you want to refresh the dashboard?", () => {
+    location.reload();
+  });
+});
+
+// Show Add Task modal
+addTaskBtn.addEventListener("click", () => {
+  toggleAddUpdateModal(true);
+});
+
+// Add new task
+addTaskConfirmBtn.addEventListener("click", event => {
+  event.preventDefault();
+
+  const newTask = {
     task: document.getElementById("task").value.toUpperCase(),
     entry: document.getElementById("entry-date").value
       ? formatDate(document.getElementById("entry-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-"),
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-"),
     start: document.getElementById("start-date").value
       ? formatDate(document.getElementById("start-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-"),
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-"),
     end: document.getElementById("end-date").value
       ? formatDate(document.getElementById("end-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-"),
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-"),
     desc: document.getElementById("description").value.toUpperCase(),
     owner: document.getElementById("owner").value.toUpperCase(),
     type: document.getElementById("type").value.toUpperCase(),
     status: document.getElementById("status").value.toUpperCase(),
   };
 
-  if (!task.task || !task.owner) {
+  if (!newTask.task || !newTask.owner) {
     alert("Task name and owner are required.");
     return;
   }
 
-  tasks.unshift(task); // add at the top
-  save();
-  location.reload;
+  tasks.unshift(newTask);
+  saveTasks();
   clearAddInputs();
-
-  const show_response_message = document.getElementById(
-    "show-response-message"
-  );
-  show_response_message.textContent = "Task Added Successfully!";
-  event.preventDefault();
-  show_response.style.display = "flex";
-  setTimeout(() => {
-    show_response.style.display = "none";
-  }, 3000);
+  toggleAddUpdateModal(false);
+  showTemporaryMessage("Task Added Successfully!");
+  location.reload();
 });
 
-update_task.addEventListener("click", (event) => {
-  // console.log(taskname, owner);
+// Update existing task
+updateTaskConfirmBtn.addEventListener("click", event => {
+  event.preventDefault();
+
   if (!taskname || !owner) {
     alert("No task selected for update.");
     return;
   }
-  // Update task logic here
-  event.preventDefault();
-  let tasks = JSON.parse(localStorage.getItem("tasks"));
-  let taskToUpdate = tasks.find(
-    (task) => task.task === taskname && task.owner === owner
-  );
+
+  let allTasks = JSON.parse(localStorage.getItem("tasks"));
+  let taskToUpdate = allTasks.find(t => t.task === taskname && t.owner === owner);
 
   if (taskToUpdate) {
     taskToUpdate.task = document.getElementById("task").value.toUpperCase();
     taskToUpdate.entry = document.getElementById("entry-date").value
       ? formatDate(document.getElementById("entry-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-");
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-");
     taskToUpdate.start = document.getElementById("start-date").value
       ? formatDate(document.getElementById("start-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-");
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-");
     taskToUpdate.end = document.getElementById("end-date").value
       ? formatDate(document.getElementById("end-date").value)
-      : new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-");
-    taskToUpdate.desc = document
-      .getElementById("description")
-      .value.toUpperCase();
+      : new Date().toLocaleDateString("en-GB").replace(/\//g, "-");
+    taskToUpdate.desc = document.getElementById("description").value.toUpperCase();
     taskToUpdate.type = document.getElementById("type").value.toUpperCase();
     taskToUpdate.owner = document.getElementById("owner").value.toUpperCase();
     taskToUpdate.status = document.getElementById("status").value.toUpperCase();
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-    document.getElementById("show-response-message").textContent =
-      "Task Updated Successfully!";
-    document.getElementById("show-response").style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("show-response").style.display = "none";
-    }, 3000);
+
+    localStorage.setItem("tasks", JSON.stringify(allTasks));
     clearAddInputs();
-    // location.reload();
+    toggleAddUpdateModal(false);
+    showTemporaryMessage("Task Updated Successfully!");
+    location.reload();
   } else {
-    document.getElementById("show-response-message").textContent =
-      "Task Not Found!";
-    document.getElementById("show-response").style.display = "flex";
-    setTimeout(() => {
-      document.getElementById("show-response").style.display = "none";
-    }, 3000);
+    showTemporaryMessage("Task Not Found!");
+  }
+});
+
+// Delete selected tasks
+deleteBtn.addEventListener("click", () => {
+  const selectedIndices = [...document.querySelectorAll(".task-checkbox:checked")]
+    .map(cb => parseInt(cb.dataset.index));
+
+  if (selectedIndices.length === 0) {
+    alert("No tasks selected.");
+    return;
   }
 
-  // const show_response_message = document.getElementById(
-  //   "show-response-message"
-  // );
-  // show_response_message.textContent = "Task Updated Successfully!";
-  // event.preventDefault();
-  // show_response.style.display = "flex";
-  // setTimeout(() => {
-  //   show_response.style.display = "none";
-  // }, 3000);
-});
-
-const task_management = document.getElementById("task-management");
-const dashboard = document.getElementById("dashboard");
-const statistic = document.getElementById("statistic");
-const info = document.getElementById("info");
-const setting = document.getElementById("setting");
-const logout = document.getElementById("logout");
-
-statistic.addEventListener("click", (event) => {
-  event.preventDefault();
-  document.getElementById("working-Container").style.display = "flex";
-  setTimeout(() => {
-    document.getElementById("working-Container").style.display = "none";
-  }, 3000);
-});
-
-info.addEventListener("click", (event) => {
-  event.preventDefault();
-  document.getElementById("working-Container").style.display = "flex";
-  setTimeout(() => {
-    document.getElementById("working-Container").style.display = "none";
-  }, 3000);
-});
-
-setting.addEventListener("click", (event) => {
-  event.preventDefault();
-  document.getElementById("working-Container").style.display = "flex";
-  setTimeout(() => {
-    document.getElementById("working-Container").style.display = "none";
-  }, 3000);
-});
-
-task_management.addEventListener("click", (event) => {
-  location.href = "../html/dash.html";
-});
-
-dashboard.addEventListener("click", (event) => {
-  location.href = "../html/dash2.html";
-});
-
-logout.addEventListener("click", (event) => {
-  localStorage.removeItem("isLoggedIn"); // Remove login status
-  location.href = "../html/login.html";
-});
-
-document.querySelectorAll(".share-socail").forEach((shared) => {
-  shared.addEventListener("click", () => {
-    const show_response_message = document.getElementById(
-      "show-response-message"
-    );
-    show_response_message.textContent = "Link Copied";
-    event.preventDefault();
-    show_response.style.display = "flex";
-    setTimeout(() => {
-      show_response.style.display = "none";
-    }, 3000);
+  confirmAction(`Delete ${selectedIndices.length} task(s)?`, () => {
+    undoStack.push(JSON.parse(JSON.stringify(tasks)));
+    for (let i = selectedIndices.length - 1; i >= 0; i--) {
+      tasks.splice(selectedIndices[i], 1);
+    }
+    saveTasks();
+    location.reload();
   });
 });
 
-let id_row;
-let taskname;
-let owner;
-
-document.querySelectorAll(".task-row").forEach((row) => {
+// Handle task row click to populate modal with task details
+document.querySelectorAll(".task-row").forEach(row => {
   row.addEventListener("click", () => {
-    document.getElementById("task").value =
-      row.querySelector(".task").innerHTML;
+    // Extract and populate task details into modal inputs
+    document.getElementById("task").value = row.querySelector(".task").innerText;
+    document.getElementById("entry-date").value = formatDateForInput(row.querySelector(".entry-date").innerText);
+    document.getElementById("start-date").value = formatDateForInput(row.querySelector(".start-date").innerText);
+    document.getElementById("end-date").value = formatDateForInput(row.querySelector(".end-date").innerText);
+    document.getElementById("description").value = row.querySelector(".desc").innerText;
+    document.getElementById("owner").value = row.querySelector(".owner").innerText;
+    document.getElementById("type").value = row.querySelector(".type").innerText.toLowerCase();
 
-    // Format dates if necessary
-    const entryDate = row.querySelector(".entry-date").innerHTML;
-    const startDate = row.querySelector(".start-date").innerHTML;
-    const endDate = row.querySelector(".end-date").innerHTML;
-
-    // Assuming dates are in DD–MM–YYYY format
-    // console.log(entryDate, startDate, endDate);
-    const formatDate = (dateString) => {
-      if (!dateString) return "";
-      const sep = dateString.includes("–") ? "–" : "/";
-      const parts = dateString.split(sep).map((p) => p.trim());
-      if (parts.length !== 3) return dateString;
-
-      let [day, month, year] = parts;
-      if (Number(month) > 12) [day, month] = [month, day]; // fallback swap
-      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-    };
-
-    document.getElementById("entry-date").value = formatDate(entryDate);
-    document.getElementById("start-date").value = formatDate(startDate);
-    document.getElementById("end-date").value = formatDate(endDate);
-
-    document.getElementById("description").value =
-      row.querySelector(".desc").innerHTML;
-    document.getElementById("owner").value =
-      row.querySelector(".owner").innerHTML;
-
-    // Ensure status and type values match option values
-    document.getElementById("type").value = row
-      .querySelector(".type")
-      .innerHTML.toLowerCase();
-
-    document.getElementById("status").value =
-      row.querySelector(".status").innerHTML.toLowerCase() === "incomplete"
-        ? "incompleted"
-        : "completed";
-    id_row = row.querySelector(".task-check .task-checkbox").id;
-    // console.log(id_row);
-
-    AddUpdateAction();
-    row
-      .querySelector(".task-check .task-checkbox")
-      .addEventListener("change", () => {
-        document.getElementById("AddUpdate").style.display = "none";
-      });
+    const statusText = row.querySelector(".status").innerText.toLowerCase();
+    document.getElementById("status").value = statusText === "incomplete" ? "incompleted" : "completed";
 
     taskname = document.getElementById("task").value;
     owner = document.getElementById("owner").value;
-    // console.log(taskname, owner);
+
+    toggleAddUpdateModal(true);
   });
 });
 
-let undoStack = [];
-function save() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
+// Navigation buttons
+const navActions = {
+  "task-management": () => location.href = "../html/dash.html",
+  "dashboard": () => location.href = "../html/dash2.html",
+  "statistic": () => showWorkingContainer(),
+  "info": () => showWorkingContainer(),
+  "setting": () => showWorkingContainer(),
+  "logout": () => {
+    localStorage.removeItem("isLoggedIn");
+    location.href = "../html/login.html";
+  }
+};
+
+function showWorkingContainer() {
+  const container = document.getElementById("working-Container");
+  container.style.display = "flex";
+  setTimeout(() => (container.style.display = "none"), 3000);
 }
 
-document.getElementById("delete").addEventListener("click", () => {
-  const selected = [...document.querySelectorAll(".task-checkbox:checked")].map(
-    (cb) => parseInt(cb.dataset.index)
-  );
-  // if (!selected.length) return showStatus("No rows selected ❗");
+Object.entries(navActions).forEach(([id, fn]) => {
+  const el = document.getElementById(id);
+  if (el) el.addEventListener("click", e => {
+    e.preventDefault();
+    fn();
+  });
+});
 
-  confirmAction(`Delete ${selected.length} task(s)?`, () => {
-    undoStack.push(JSON.parse(JSON.stringify(tasks)));
-    for (let i = selected.length - 1; i >= 0; i--) {
-      tasks.splice(selected[i], 1);
-    }
-    save();
-    location.reload();
+// Social share buttons feedback
+document.querySelectorAll(".share-socail").forEach(btn => {
+  btn.addEventListener("click", e => {
+    e.preventDefault();
+    showTemporaryMessage("Link Copied");
   });
 });

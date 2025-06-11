@@ -1,99 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard 2</title>
-    <link rel="stylesheet" href="../css/dash2.css" />
-    <link rel="stylesheet" href="../asset/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard 2</title>
+  <link rel="stylesheet" href="../css/dash2.css" />
+  <link rel="stylesheet" href="../asset/fontawesome-free-6.7.2-web/fontawesome-free-6.7.2-web/css/all.min.css">
 </head>
-
 <body>
-    <header>
-        <div class="title">Dashboard 2</div>
-        <div class="user-box">
-            <span>USERNAME</span>
-            <div class="avatar"><img src="./../asset/img/user.png" alt=""></div>
-            <div class="dropdown">
-                <span class="dropdown-icon"><img src="../asset/img/icon/Untitled-1.png" alt=""></span>
-                <div class="dropdown-content">
-                    <div class="menu" id="task-management">Task Management</div>
-                    <div class="menu" id="dashboard">Dashboard</div>
-                    <div class="menu" id="statistic">Statistic</div>
-                    <div class="menu" id="info">Info</div>
-                    <div class="menu" id="setting">Setting</div>
-                    <div class="menu" id="logout">Logout</div>
-                </div>
-            </div>
+  <header>
+    <div class="title">Dashboard 2</div>
+    <div class="user-box">
+      <span>USERNAME</span>
+      <div class="avatar"><img src="./../asset/img/user.png" alt=""></div>
+      <div class="dropdown">
+        <span class="dropdown-icon"><img src="../asset/img/icon/Untitled-1.png" alt=""></span>
+        <div class="dropdown-content">
+          <div class="menu" id="task-management">Task Management</div>
+          <div class="menu" id="dashboard">Dashboard</div>
+          <div class="menu" id="statistic">Statistic</div>
+          <div class="menu" id="info">Info</div>
+          <div class="menu" id="setting">Setting</div>
+          <div class="menu" id="logout">Logout</div>
         </div>
-    </header>
-
-    <div class="container">
-        <aside>
-            <div class="box login">
-                <h3>Last Login</h3>
-                <ul class="aside-tab-scroll">
-                    <li>Wed, 21st March, 2025 <span class="status online"></span></li>
-                    <li>Wed, 21st March, 2025 <span class="status online"></span></li>
-                    <li>Wed, 21st March, 2025 <span class="status online"></span></li>
-                </ul>
-            </div>
-
-            <div class="box social">
-                <h3>Social</h3>
-                <ul class="aside-tab-scroll">
-                    <li>Facebook ➝ <span class="share-social"><i class="fa fa-arrow-up-right-from-square"></i></span></li>
-                </ul>
-            </div>
-        </aside>
-
-        <main>
-            <div class="todo-header">
-                <h2>To-Do List</h2>
-                <div class="icons">
-                    <span class="task-icons-btn" id="refresh"><img src="../asset/img/icon/007-undo.png" alt=""></span>
-                    <span class="task-icons-btn" id="add-task-btn"><img src="../asset/img/icon/008-image-gallery.png" alt=""></span>
-                    <span class="task-icons-btn" id="delete"><img src="../asset/img/icon/005-clear-1.png" alt=""></span>
-                    <span class="task-icons-btn" id="clear"><img src="../asset/img/icon/003-clean.png" alt=""></span>
-                </div>
-            </div>
-
-            <div class="task-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                <label for="select-all" class="visually-hidden">Select all tasks</label>
-                                <input type="checkbox" id="select-all" title="Select all tasks" />
-                            </th>
-                            <th>Task</th>
-                            <th>Entry Date</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Description</th>
-                            <th>Owner</th>
-                            <th>Type</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody id="taskBody">
-                        <!-- Dynamically generated rows from localStorage -->
-                    </tbody>
-                </table>
-            </div>
-        </main>
+      </div>
     </div>
+  </header>
 
-    <div id="confirmModal" class="modal">
-        <div class="modal-content">
-            <p id="confirmText">Are you sure?</p>
-            <button class="confirm-btn" id="confirmYes">Yes</button>
-            <button class="confirm-btn" id="confirmNo">No</button>
+  <div class="container">
+    <aside>
+      <div class="box login">
+        <h3>Last Login</h3>
+        <ul class="aside-tab-scroll">
+          <li>Wed, 21st March, 2025 <span class="status online"></span></li>
+          <li>Wed, 21st March, 2025 <span class="status online"></span></li>
+          <li>Wed, 21st March, 2025 <span class="status online"></span></li>
+        </ul>
+      </div>
+      <div class="box social">
+        <h3>Social</h3>
+        <ul class="aside-tab-scroll">
+          <li>Facebook ➝ <span class="share-social"><i class="fa fa-arrow-up-right-from-square"></i></span></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main>
+      <div class="todo-header">
+        <h2>To-Do List</h2>
+        <div class="icons">
+          <span class="task-icons-btn" id="refresh"><img src="../asset/img/icon/007-undo.png" alt=""></span>
+          <span class="task-icons-btn" id="add-task-btn"><img src="../asset/img/icon/008-image-gallery.png" alt=""></span>
+          <span class="task-icons-btn" id="delete"><img src="../asset/img/icon/005-clear-1.png" alt=""></span>
+          <span class="task-icons-btn" id="clear"><img src="../asset/img/icon/003-clean.png" alt=""></span>
         </div>
-    </div>
+      </div>
 
-    <script src="../js/dash2.js"></script>
+      <div class="task-inputs">
+        <input type="text" id="task" placeholder="Task" />
+        <input type="date" id="entry-date" />
+        <input type="date" id="start-date" />
+        <input type="date" id="end-date" />
+        <input type="text" id="description" placeholder="Description" />
+        <input type="text" id="owner" placeholder="Owner" />
+        <input type="text" id="type" placeholder="Type" />
+        <input type="text" id="status" placeholder="Status" />
+      </div>
+
+      <div class="task-table">
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="select-all" title="Select all tasks" /></th>
+              <th>Task</th>
+              <th>Entry Date</th>
+              <th>Start Date</th>
+              <th>End Date</th>
+              <th>Description</th>
+              <th>Owner</th>
+              <th>Type</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="taskBody">
+            <!-- Tasks render here -->
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <div id="confirmModal" class="modal">
+    <div class="modal-content">
+      <p id="confirmText">Are you sure?</p>
+      <button class="confirm-btn" id="confirmYes">Yes</button>
+      <button class="confirm-btn" id="confirmNo">No</button>
+    </div>
+  </div>
+
+  <script src="../js/dash2.js"></script>
 </body>
-
 </html>
