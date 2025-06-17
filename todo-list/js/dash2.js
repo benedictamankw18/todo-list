@@ -104,9 +104,11 @@ document.getElementById("delete").addEventListener("click", () => {
 document.getElementById("taskBody").addEventListener("click", (e) => {
   if (e.target.classList.contains("close")) {
     const index = parseInt(e.target.dataset.index);
-    tasks.splice(index, 1);
-    save();
-    renderTable(tasks);
+    confirmAction(`Are you sure you want to delete this task?`, () => {
+      tasks.splice(index, 1);
+      save();
+      renderTable(tasks);
+    });
   }
 });
 
